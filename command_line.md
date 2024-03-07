@@ -1,5 +1,6 @@
-#### Terminal Commands Cheatsheet: [Terminal Commands Cheatsheet](https://github.com/0nn0/terminal-mac-cheatsheet)
+### Terminal Commands Cheatsheet: [Terminal Commands Cheatsheet](https://github.com/0nn0/terminal-mac-cheatsheet)
 
+### The following examples are for MacOS
 #### 1. The steps of setting a variable in ternimal and make it work
  - **Open Terminal**: You can find it in the Applications folder or search for it using Spotlight (Command + Space).
  - **Edit Bash Profile**: Use the command **`nano ~/.bash_profile`** or **`nano ~/.zshrc`** (for newer MacOS versions) to open the profile file in a text editor.
@@ -14,4 +15,4 @@
     2. `mv [test.py](http://test.py) ../test` → move to a new folder called test
 #### 3. `**rm**` delete files, `rm -r [folder]` you can use this to delete a folder
 #### 4. `**which [program]**` tells you where your programm is in the folders listed in the PATH enviroment variable
-#### 5. On mac, to show enviroment variable name, you can do like `echo $HOME` this means that show the variable name HOME’s string value
+#### 5. To show enviroment variable name, you can do like `echo $HOME` this means that show the variable name HOME’s string value
