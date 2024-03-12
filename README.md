@@ -9,3 +9,15 @@
 - [Command Line](https://github.com/zoechensj/ds_code_template_and_guides/blob/main/command_line.md)
 - [Kaggle Projects](https://github.com/zoechensj/ds_code_template_and_guides/tree/main/kaggle_project)
   - [Bank Churn](https://github.com/zoechensj/ds_code_template_and_guides/tree/main/kaggle_project/bank_churn)
+    <details>
+    <summary>Click to see explanation!</summary>
+    
+      This notebook is a use case for classification problem. It contains methods of:
+
+        - EDA Analysis
+        - How choose the best ML model
+        - Catboost Model: what is it and how to use
+        - How to use cross validation 
+        - How to use GridSearch to fine tune hyper-parameters
+        - How to use Hyperopt library to fine tune hyper-parameters
+    </details>
