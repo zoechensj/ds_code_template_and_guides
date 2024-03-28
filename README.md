@@ -22,3 +22,14 @@
         - How to use GridSearch to fine tune hyper-parameters
         - How to use Hyperopt library to fine tune hyper-parameters
     </details>
+
+    - [Customer Personality](https://github.com/zoechensj/ds_code_template_and_guides/tree/main/kaggle_project/customer_personality)
+      <details>
+      <summary>Click to see explanation!</summary>
+    
+      This notebook is a use case for clustering problem. It contains methods of:
+
+        - EDA Analysis
+        - PCA to reduce dimensions
+        - Kmeans Clustering and Agglomerative Clustering Methods 
+      </details>
