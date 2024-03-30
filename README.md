@@ -1,5 +1,5 @@
 
-### This repo is created to record my learning through Data Science and save the useful links, functions, theories, and so on.
+### This repo is created to record my notes and learning through Data Science. It contains the DS related theories, useful functions, Kaggle projects, and so on. This is the toolkit for me to refer to when I need to recall the knowledge I've learned.
 
 ## Table of Content
 - [A/B Testing](https://github.com/zoechensj/code_template_and_guides/tree/main/a_b_testing)
