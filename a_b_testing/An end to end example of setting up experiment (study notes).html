@@ -1,0 +1,725 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>An end to end example of setting up experiment</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-transparentGray { background-color: rgba(227, 226, 224, 0); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="a7d1b453-f06d-4361-adee-8e19687f2b26" class="page sans"><header><h1 class="page-title">An end to end example of setting up experiment</h1><p class="page-description"></p></header><div class="page-body"><p id="c920123d-7bd2-4e5d-af7b-9705f744a402" class="">
+</p><p id="ae4bc19d-43fa-4a41-bf0c-08a6d3ab7f76" class="">
+</p><h3 id="a23582a5-166b-45c9-b3ea-1506eb8db1d3" class="">1. Set up the example</h3><p id="dcf0bbb4-a4b6-4a81-ba2c-aa56faa2b903" class="">Here we want to run a experiment to see if the revenue decrease once adding a promo code feature in the checkout page</p><h3 id="cc6716c2-0ccc-40f5-b8d6-66ce64f15539" class="">2. Hypothesis</h3><blockquote id="bfce6f1b-9230-48bc-a7f0-74a673c816f4" class="">Adding a coupon code field to the checkout page will degrade revenue</blockquote><p id="fae0d75f-b51b-4e5a-aa79-7fc9d26be043" class="">This is the H1 in experiment, the null hypothesis is adding a coupon code won’t degrade revenue</p><h3 id="3900a63f-f41a-4402-ad81-813cf39f56aa" class="">3. Define goal metrics or OEC</h3><p id="51de68d9-b9f3-4324-bd34-017dc006874a" class="">Here we will use <code>revenue per user</code> as a OEC or key metric </p><p id="7d9a8601-0708-4e64-b03d-ef627dd16f4d" class="">Now we will need to determine the denominator in the metric:</p><ol type="1" id="5ef01c98-2259-4eb5-8ab0-4760ee536231" class="numbered-list" start="1"><li>All users in the control / test groups </li></ol><p id="003ada17-74f5-49e6-8275-66f7dc9895ef" class="">This is valid, however it is noisy because not all the users have reached to the checkout page. these users could never impact the revenue, and won’t see the change at all. So excluding these users will make the test more sensitive</p><ol type="1" id="1c7c6d4e-6ef2-49a7-9cc4-120829c234c5" class="numbered-list" start="2"><li>All users who visited the website </li></ol><p id="7fd7197e-2e51-4517-9e59-19c5c30f89f4" class="">Same issue as above</p><ol type="1" id="8f7e8e16-30a4-43d7-9c46-6ef45af3e4ca" class="numbered-list" start="3"><li>Users who complete the purchase processes </li></ol><p id="fc41d084-2459-4270-891a-62c73ef47ea2" class="">This choice is incorrect and biased as it assumes that the change will impact the amount purchased, not the percentage of users who complete the purchases. If more users purchases, revenue per user may drop even though total revenue increased</p><ol type="1" id="b7dcb6a7-4a4c-4fde-9cd5-57e6e5f4375d" class="numbered-list" start="4"><li>Only users who started the purchase process.</li></ol><p id="85790354-151e-4aad-bf1e-6e8ee7e0352b" class="">This is the best choice, This includes all potential users affected — users who potentially see the promo code field.</p><p id="d9d98629-c952-4ec3-80e3-e961475a90bf" class="">
+</p><p id="5652e6ec-ca6b-479b-98b1-a8dd64b920fa" class=""><strong>Now the refined hypothesis should be </strong></p><blockquote id="2cd22925-a997-4368-978d-6bd47e46899b" class="">Adding a coupon code field to the checkout page will degrade <code>revenue per user</code> for users who start the purchase process</blockquote><p id="0eec17a1-c289-4e7a-82aa-88b1262fe055" class="">
+</p><p id="79bfcfb4-ca2e-4b02-9309-6e90ab3dfe5a" class="">When to choose rate or probability( CTR or the number of customers clicked the button): general speaking CTR is useful to analysis engagement/usebality, the latter is more useful to analyse the impact</p><p id="84fa7a9b-de35-45a4-8468-7a5a3f027d7d" class=""><strong>It’s super important to choose the right Key metric to measure, so take some time to define.</strong></p><h3 id="ba076d99-514f-4aa4-a824-faaa97196424" class="">Sanity checking metrics</h3><p id="85cd94ca-da6c-475c-85a8-bc16af515daa" class="">At the same time, we should also think about the sanity checking metrics, the metrics that won’t change in the groups, like the distributions and so on. This will be used to check if there is any problem with the data</p><p id="8ccb44bc-1b36-4852-b924-5f9bb5cb5c2e" class="">
+</p><p id="407059d7-93f8-454d-85e5-94a270645c5c" class=""><strong>Should we use one goal metric/evaluation metric or severals?</strong></p><p id="a20a83ff-933b-40bf-bf79-80ee5c5cfe9d" class="">this depends on the company. We can also combined a few metrics into one composited metrics — becoming like a single weighted metric that summarise all your individual metrics.  Be aware that this need to be aligned with all the people and can be hard to make it work, and it can be over optimised.</p><h3 id="8fc9d199-fd36-4cc3-bdf9-e3f08e6bb90b" class="">4. Design Experiment </h3><p id="e1b21ce7-ae10-4641-b004-b565e80f3948" class="">
+</p><p id="dd8e8609-edaa-4322-aba6-9b820a0eaaf0" class=""><strong>4.1 Set significance level</strong></p><p id="e1a67567-95a3-4cfa-9b6f-0c8a85f7c0df" class=""><strong>P-value which is the probability of observing such difference or extreme giving null hypothesis.</strong> As following picture, in the first graph. The null hypothesis is that there is no difference, hence the mean is 0, now with significant level 0.05, we can see that the P value is less than 0.05. hence significant. One sided P value is only look at the left side, two sided is look at the left and right side of the distribution. </p><p id="79cea376-33ba-48fe-ba1d-3d74b5f93838" class="">Another way to examine significance is to check whether the confidence interval overlaps with zero. See below pic 2. Confidence interval indicates that how often the 95% confidence intervals computed from many studies would contain the true treatment effect</p><ul id="0d970ea5-f79b-4ae1-8508-4b5f4fee74fa" class="toggle"><li><details open=""><summary><strong>Graph to show P value intuitively</strong></summary><figure id="d80d0265-34c1-414b-aeef-2d5b02b1798e" class="image"><a href="An%20end%20to%20end%20example%20of%20setting%20up%20experiment%20a7d1b453f06d4361adee8e19687f2b26/IMG_2623.jpg"><img style="width:2543px" src="An%20end%20to%20end%20example%20of%20setting%20up%20experiment%20a7d1b453f06d4361adee8e19687f2b26/IMG_2623.jpg"/></a></figure></details></li></ul><p id="e0f30043-49e0-4cac-b33e-7fd3be1131a2" class="">
+</p><p id="4f04d299-9680-416c-bda2-4b2372d72f93" class=""><strong>4.2 Set Randomization unit </strong></p><p id="706def63-612f-4d5d-a8c8-0c9c2caafb48" class="">Usually this is users</p><p id="83b5e5e8-2d09-41c2-97c3-e29b237d5281" class="">
+</p><p id="c2099d69-a992-404c-b926-a74f371f6845" class=""><strong>4.3 What population of randomisation units do we want to target?</strong></p><p id="97fd6463-8afe-4987-b7bf-eac4ccebadee" class="">You can test on all users, by country, age, languages, platforms and so on</p><p id="cc7441bb-bb4c-4e80-ab7d-5a24ce1503a9" class="">
+</p><p id="5ee4ceed-3bc0-44fd-b164-55ef955aa273" class=""><strong>4.4 Set practical significance level</strong></p><p id="a7aeff5b-54c7-4ff3-a751-96eaf0d166a0" class="">While significance level is set to measure how likely the result you get could have happened by chance given null hypothesis, not all results are practically meaningful. <strong>How big the difference actually matters to the business? </strong>— This is the <strong>practical</strong> <strong>significance. </strong>Here we assume a 1% level. </p><p id="50ac0bbb-9d1c-419e-bdf6-5c1e90e35f19" class="">Here the practical significance is the threshold for the difference. The significant level is the threshold for the P value. i.e. image the difference of revenue per user for test and control group is £-0.09 (-2.8%), P value is to calculate the p value of 2.8% given null hypothesis. the pratical significance is to compare the threshold to 2.8%.</p><p id="d0b519cd-1a89-427e-aa9e-75b786f9feb3" class="">
+</p><p id="96943951-496b-4b30-bd8b-582ca1f34588" class=""><strong>4.5 Set sample size</strong></p><p id="fa29fb66-8d08-4756-bace-ce0f178b9f91" class="">The more users the smaller effect can be detected significantly.  The smaller the standard error the smaller the size can be to achieve the same sensitivity.</p><p id="6dfcfb88-6bee-46c8-b772-d0dc861884da" class="">Some key concepts for power analysis to get the sample size we need:</p><ol type="1" id="1eaa7700-b657-48b8-bdfc-3f48108205d8" class="numbered-list" start="1"><li><strong>Effect Size (ES):</strong> This measures the strength of the relationship between the variables being tested. It quantifies the magnitude of the difference between test and control groups or the strength of an effect. </li></ol><p id="ed0c4d7a-5d52-4503-8d4b-808440ec88b5" class="">In simple word, it is the overlap between the distributions, it is to say how different are the two distributions are. it is decided by both the mean and standard deiviation of the two <a href="https://www.youtube.com/watch?v=VX_M3tIyiYk&amp;ab_channel=StatQuestwithJoshStarmer">distribitions</a> <div class="indented"><figure id="5595660e-17e2-496e-a5b7-68728e97b9e0" class="image"><a href="An%20end%20to%20end%20example%20of%20setting%20up%20experiment%20a7d1b453f06d4361adee8e19687f2b26/Untitled.png"><img style="width:1420px" src="An%20end%20to%20end%20example%20of%20setting%20up%20experiment%20a7d1b453f06d4361adee8e19687f2b26/Untitled.png"/></a></figure></div></p><figure id="983067d3-7cf7-48f8-af93-d93719720908" class="image"><a href="An%20end%20to%20end%20example%20of%20setting%20up%20experiment%20a7d1b453f06d4361adee8e19687f2b26/Untitled%201.png"><img style="width:1770px" src="An%20end%20to%20end%20example%20of%20setting%20up%20experiment%20a7d1b453f06d4361adee8e19687f2b26/Untitled%201.png"/></a></figure><p id="70ccb893-58b7-4f3d-8624-f2bf34a5f88c" class="">
+</p><p id="27d964d4-7b25-41ce-944d-2041fe7adbd3" class="">
+</p><p id="5a1f8d97-6b9b-4cbe-9a0e-f2cb7e4ab699" class="">An effect can be the result of a treatment revealed in a comparison between groups (e.g. treated and untreated groups) or it can describe the degree of association between two related variables (e.g. treatment dosage and health).</p><p id="aa90c367-0e9d-49d3-88d1-c9f83f3d90d9" class="">Thus, effect size can refer to the raw difference between group means, or absolute effect size, as well as standardised measures of effect, which are calculated to transform the effect to an easily understood scale. Absolute effect size is useful when the variables under study have intrinsic meaning (eg, number of hours of sleep).</p><p id="36fe0535-2499-45d2-80ae-809ba187b397" class="">
+</p><p id="a7c16cd2-dc4b-463d-8bfa-58e04ea7b645" class=""><strong>In summary, the effect size can be measured by:</strong></p><ul id="fdfd0ace-930d-4d24-ae3f-9a24fc0b02ca" class="bulleted-list"><li style="list-style-type:disc">Standardised Result. The effect size has a standard scale allowing it to be interpreted generally regardless of application (e.g. Cohen’s d calculation).</li></ul><ul id="6297d37f-87bf-4eb5-bad1-72aedb154d8a" class="bulleted-list"><li style="list-style-type:disc">Original Units Result. The effect size may use the original units of the variable, which can aid in the interpretation within the domain (e.g. difference between two sample means)</li></ul><ul id="3c4b8ff3-ec72-4925-974f-aa178e5eddf7" class="bulleted-list"><li style="list-style-type:disc">Unit Free Result. The effect size may not have units such as a count or proportion (e.g. a correlation coefficient).</li></ul><p id="cc337cd2-c4c4-4344-acba-96271a5d5751" class="">
+</p><p id="550483bf-6320-43cf-8892-1364ac6f4843" class=""><strong>For finding the sample size, as we don’t know the treatment group value, we can estimate the effect size by using the practical significance (also called minimum detectable effect size)</strong></p><p id="fe0981bb-ea8b-4f4a-9165-8c0ea4d78a74" class="">Read here for <a href="https://machinelearningmastery.com/effect-size-measures-in-python/">ES reading</a>.   </p><ol type="1" id="27d03589-496a-4e63-8d76-c7e57c199465" class="numbered-list" start="2"><li><strong>Significance Level (α):</strong> The significance level (often denoted as α) is the threshold for determining whether an observed effect is statistically significant. Common values for α include 0.05 (5%) and 0.01 (1%).</li></ol><ol type="1" id="35508aba-3cd9-483c-80d4-5e57fdd88d6b" class="numbered-list" start="3"><li><strong>Power (1 - β):</strong> the probability of detecting a meaningful difference between the variants when there really is one. <strong>The power is the probability distribution for the alternative hypothesis</strong>. Power is the probability of correctly rejecting a false null hypothesis (true positive). In other words, it&#x27;s the likelihood of finding a statistically significant result when the effect actually exists. Normally use 80% - 90%. The higher the power, the lower the type ii error. The power is different to the significant P-value, you can think it as Power is designing, it is set to make sure there is high probalitify of true positive.  P value is to assess the test result to make sure we don’t fall into the false positive situation</li></ol><ol type="1" id="6aeba61d-8fa8-4ef8-8a3f-3f78fe9f7dfe" class="numbered-list" start="4"><li><strong>Sample Size (n):</strong> The number of observations in each group (control and test) of an A/B test.</li></ol><p id="846ca72a-cd3e-42d4-85b2-ff104ae9bfaa" class="">
+</p><figure id="8e13492b-3509-4b4f-8b7f-bb3ff4e23b28" class="image"><a href="An%20end%20to%20end%20example%20of%20setting%20up%20experiment%20a7d1b453f06d4361adee8e19687f2b26/Untitled%202.png"><img style="width:1124px" src="An%20end%20to%20end%20example%20of%20setting%20up%20experiment%20a7d1b453f06d4361adee8e19687f2b26/Untitled%202.png"/></a></figure><p id="62cd54b5-cac0-4568-a58c-ee0c0e746c1f" class="">
+</p><p id="9baaad63-a573-49db-889f-ac26327b8a90" class=""><strong>How to calculate Sample size? </strong></p><p id="ccefadfe-a509-45d2-9fda-9ff5cf604171" class="">The following table shows how to calculate the sample size (<a href="https://sphweb.bumc.bu.edu/otlt/mph-modules/bs/bs704_power/bs704_power_print.html">https://sphweb.bumc.bu.edu/otlt/mph-modules/bs/bs704_power/bs704_power_print.html</a>)</p><figure id="06005ad1-a07f-4703-ba9f-638284e53102" class="image"><a href="An%20end%20to%20end%20example%20of%20setting%20up%20experiment%20a7d1b453f06d4361adee8e19687f2b26/Untitled%203.png"><img style="width:3412px" src="An%20end%20to%20end%20example%20of%20setting%20up%20experiment%20a7d1b453f06d4361adee8e19687f2b26/Untitled%203.png"/></a></figure><p id="efb2212b-7b4b-4d2a-a277-38b70b8524f6" class="">Also read:</p><p id="ced79e86-cf45-4ef5-8f65-a2b4aeff7e21" class="">A very good source to read about how to calculate the sample size from Twitter: <a href="https://blog.twitter.com/engineering/en_us/a/2016/power-minimal-detectable-effect-and-bucket-size-estimation-in-ab-tests">https://blog.twitter.com/engineering/en_us/a/2016/power-minimal-detectable-effect-and-bucket-size-estimation-in-ab-tests</a></p><p id="042051db-16b2-4a08-9402-1b35a8984771" class="">Read <a href="https://en.wikipedia.org/wiki/Power_of_a_test">Wiki</a> for the simple formula to calculate using rule of thumb by the standard variance and ES</p><p id="34a9ff2b-224d-44da-b6dd-0f2cbda75a12" class="">Future reading: <a href="https://sphweb.bumc.bu.edu/otlt/mph-modules/bs/bs704_power/bs704_power_print.html">https://sphweb.bumc.bu.edu/otlt/mph-modules/bs/bs704_power/bs704_power_print.html</a></p><p id="95e4239a-a326-4ee0-9136-70765975ee5e" class=""><a href="https://statisticsbyjim.com/basics/effect-sizes-statistics/">https://statisticsbyjim.com/basics/effect-sizes-statistics/</a></p><p id="caadddf1-3aef-4314-9cc1-d5d960e74656" class="">
+</p><p id="a3185fe9-c841-4d4c-891f-6f166f5b2461" class="">Python codes: <a href="https://towardsdatascience.com/the-math-behind-a-b-testing-with-example-code-part-1-of-2-7be752e1d06f">https://towardsdatascience.com/the-math-behind-a-b-testing-with-example-code-part-1-of-2-7be752e1d06f</a></p><p id="4f3ca4e7-a469-4d93-aab6-45603fed528e" class="">A quick python codes to calculate sample size using power analysis:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="32e82ad3-ce09-423e-84ea-3b4ca0d64a90" class="code"><code class="language-Python"># estimate sample size via power analysis
+from statsmodels.stats.power import TTestIndPower
+import scipy.stats as stats
+import numpy as np
+
+# calculate the sample size for PROPORTIONs outcome samples
+def effect_size(p1, min_detectable_effect):
+    p2 = p1 + min_detectable_effect
+    p = (p1+p2)/2
+    es = (p1-p2)/np.sqrt(p*(1-p)) 
+# np.sqrt(p*(1-p)) -&gt; pooled standard deviation, the estimated difference between two population proportions / pooled estimated standarded deviation
+    return es
+
+def power_analysis(p1, p2, alpha=0.05, belta=0.2):
+    es = effect_size(p1, p2)
+    z_alpha = stats.norm.ppf(1-alpha/2)
+    z_beta = stats.norm.ppf(1-belta)
+    result = 2 * ((z_alpha+z_beta) / es ) ** 2
+    return result
+
+
+print(power_analysis(0.46, 0.11))</code></pre><p id="d0e9123e-44c0-44d0-899c-603c5995d681" class="">
+</p><p id="37ac286c-a0d6-4e2a-b750-f8a46343193f" class="">
+</p><p id="d1d3e5fc-b0b6-441f-bafd-2e48f0f15b1d" class=""><strong>4.6 Set running time</strong></p><p id="f9dd35d2-8a56-437e-ad37-7f8f239bd0af" class="">Consider:</p><p id="aa096416-590f-4016-95cc-2293645074b1" class=""><a href="https://learn.udacity.com/courses/ud257">https://learn.udacity.com/courses/ud257</a>. course link </p><p id="085fcc4b-6be6-4988-a29b-1cc5ce1d5012" class=""><a href="https://www.kaggle.com/code/tammyrotem/ab-tests-with-python">https://www.kaggle.com/code/tammyrotem/ab-tests-with-python</a> Kaggle AB test</p><p id="0f9616b5-c8b5-4aa5-8236-abdbd4091d38" class="">
+</p><p id="b054bdae-f71a-4766-84a1-9614daabcd99" class="">
+</p><p id="97886ec8-8430-4c30-876b-c230819e691e" class="">
+</p><h3 id="940ef849-94bb-4e03-888b-a6a994ec9780" class="">5. Analysis Result</h3><p id="2ed4a6ff-df6e-444a-92a5-d54f556c0fa1" class="">To Calculate difference, we will use statistic testing methods to measure, calculating the P value. </p><p id="f5d2311b-e703-432d-a7a9-923ecf3fbb0f" class="">
+</p><p id="632a83b3-7a0d-459a-89c5-cf1227eefe3b" class=""><strong>Two Sample t-tests are the most common significance tests used. However there are many other methods used to test the significance。 Read here: </strong><a href="https://machinelearningmastery.com/statistical-hypothesis-tests-in-python-cheat-sheet/">https://machinelearningmastery.com/statistical-hypothesis-tests-in-python-cheat-sheet/</a> </p><p id="7211449e-bca4-4db8-8cef-bd9d7378d50c" class="">or Read blow</p><figure id="c3d255c2-c8db-4207-8893-f1dcca631763" class="link-to-page"><a href="https://www.notion.so/Statistic-Testing-Methods-c3d255c2c8db42078893f1dcca631763?pvs=21">Statistic Testing Methods</a></figure><p id="441236dd-34ec-45aa-9c6f-0ec24a9806b4" class="">
+</p><p id="0b87e832-b78c-4030-bdc2-8e44fd03a457" class=""><strong>Calculate P value: p value is the probalitity of observing such difference or more extreme given the null hypothesis. </strong></p><p id="207e455f-0d2e-445c-947b-9c05842c9d27" class="">One tailed:</p><ol type="1" id="fc7a6bc1-95ed-4a76-9cff-994d29fd6fdb" class="numbered-list" start="1"><li>A statistically significant positive result</li></ol><ol type="1" id="4be7b29a-7436-4be1-8af0-80d5b0cf3da3" class="numbered-list" start="2"><li>No statistically significant result</li></ol><figure id="d59873c3-5912-4f63-9106-bf471d2c6275" class="image"><a href="An%20end%20to%20end%20example%20of%20setting%20up%20experiment%20a7d1b453f06d4361adee8e19687f2b26/Untitled%204.png"><img style="width:720px" src="An%20end%20to%20end%20example%20of%20setting%20up%20experiment%20a7d1b453f06d4361adee8e19687f2b26/Untitled%204.png"/></a></figure><p id="18c782fe-c760-4820-919c-d74d9cf654d6" class="">two tailed:</p><ol type="1" id="863f4e53-6fef-4fbb-873f-5b76dfb62ba6" class="numbered-list" start="1"><li>A statistically significant positive result</li></ol><ol type="1" id="ca88cceb-d087-419c-a320-da37247fe00e" class="numbered-list" start="2"><li>A statistically significant negative result</li></ol><ol type="1" id="d9b2156e-8f76-4e3e-b2ed-82a9907fa3d4" class="numbered-list" start="3"><li>No statistically significant difference.</li></ol><figure id="08a90294-ca26-470b-8f34-733eed92fcd7" class="image"><a href="An%20end%20to%20end%20example%20of%20setting%20up%20experiment%20a7d1b453f06d4361adee8e19687f2b26/Untitled%205.png"><img style="width:1546px" src="An%20end%20to%20end%20example%20of%20setting%20up%20experiment%20a7d1b453f06d4361adee8e19687f2b26/Untitled%205.png"/></a></figure><p id="9bb20318-7d2d-40d1-8f97-d698c9cde367" class="">
+</p><p id="ec11b25e-592c-42e2-ab60-38a0e0359baf" class=""><strong>We can use t-test or z-test to compare the means of two data groups to determine if there is a significant difference between them.(read </strong><strong><a href="https://www.analyticsvidhya.com/blog/2020/06/statistics-analytics-hypothesis-testing-z-test-t-test/">here</a></strong><strong> )。</strong></p><figure id="f16bc2f4-417b-48b8-b0d9-d86419ab041b" class="image"><a href="An%20end%20to%20end%20example%20of%20setting%20up%20experiment%20a7d1b453f06d4361adee8e19687f2b26/Untitled%206.png"><img style="width:1680px" src="An%20end%20to%20end%20example%20of%20setting%20up%20experiment%20a7d1b453f06d4361adee8e19687f2b26/Untitled%206.png"/></a></figure><p id="ba9c001a-e7bf-40a3-8b18-51954e302b32" class="">
+</p><p id="2848a1a0-902e-45b4-97ed-03b26f9a4ef3" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
